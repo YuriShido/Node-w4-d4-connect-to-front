@@ -25,9 +25,9 @@ const Register = () => {
         confirmPassword: passwordCheck,
         displayName,
       }
-      await Axios.post('http://localhost:8080/users/register', newUser)
+      await Axios.post(`${process.env.REACT_APP_SERVER_URL}/users/register`, newUser)
       //auto login
-      const loginRes = await Axios.post('http://localhost:8080/users/login', {
+      const loginRes = await Axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, {
         email,
         password,
       })
@@ -41,6 +41,7 @@ const Register = () => {
       err.response.data.msg && setError(err.response.data.msg)
     }
   }
+
 
   return (
     <div className='page'>

@@ -13,25 +13,25 @@ const Login = () => {
     const history = useHistory()
   
     const submit = async (e) => {
-      e.preventDefault()
-  
-      try {
-        const loginUser = { email, password }
-        const loginRes = await Axios.post(
-          'http://localhost:8080/users/login',
-          loginUser
-        )
-        setUserData({ 
-          user: loginRes.data.user, 
-          token: loginRes.data.token
-        })
-  
-        localStorage.setItem("auth-token", loginRes.data.token)
-        history.push('/')
-      } catch (err) {
-          err.response.data.msg && setError(err.response.data.msg)
+        e.preventDefault()
+    
+        try {
+          const loginUser = { email, password }
+          const loginRes = await Axios.post(
+            `${process.env.REACT_APP_SERVER_URL}/users/login`,
+            loginUser
+          )
+          setUserData({ 
+            user: loginRes.data.user, 
+            token: loginRes.data.token
+          })
+    
+          localStorage.setItem("auth-token", loginRes.data.token)
+          history.push('/')
+        } catch (err) {
+            err.response.data.msg && setError(err.response.data.msg)
+        }
       }
-    }
   return (
     <div className="page">
       <h2>Login</h2>

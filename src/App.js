@@ -25,26 +25,29 @@ function App() {
   // }, [])
 
   useEffect(() => {
-    // console.log(userData)
     const checkLoggedIn = async() => {
       let token = localStorage.getItem("auth-token")
-      if(token === null) {
+      if(token === null){
         localStorage.setItem("auth-token", "")
         token = ""
       }
 
-      const tokenRes = await Axios.post("http://localhost:8080/users/tokenIsValid", 
-      null,
-      {
-        headers: { "e-auth-token": token }
-      } )
-
-      if(tokenRes.data) {
-        const userRes = await Axios.get('http://localhost:8080/users',
+      const tokenRes = await Axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/users/tokenIsValid`, 
+        null,
         {
           headers: { "x-auth-token": token }
-        }
+        }  
+      )
+      
+      if(tokenRes.data){
+        const userRes = await Axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/users/`,
+          {
+            headers: { "x-auth-token": token }
+          }
         )
+
         setUserData({
           token: token,
           user: userRes.data
